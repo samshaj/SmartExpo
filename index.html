@@ -103,7 +103,17 @@
       <div class="visualizer-card">
         <div class="card-header">
           <h3>2D Orbital Model</h3>
-          <button id="toggle-orbit-anim" class="btn-secondary">Pause Animation</button>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label for="zoom-select" style="font-size: 0.8rem; color: var(--text-muted);">Zoom:</label>
+            <select id="zoom-select" class="btn-secondary" style="background: rgba(10, 18, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.2); padding: 0.3rem 0.6rem; border-radius: 4px; color: #fff;">
+              <option value="auto" selected>Auto Fit</option>
+              <option value="1x">1x (Far)</option>
+              <option value="5x">5x</option>
+              <option value="10x">10x</option>
+              <option value="50x">50x (Close-in)</option>
+            </select>
+            <button id="toggle-orbit-anim" class="btn-secondary">Pause Animation</button>
+          </div>
         </div>
         <div class="canvas-wrapper">
           <canvas id="orbit-canvas"></canvas>
@@ -154,6 +164,18 @@
           <span class="stat-title">Physical Composition</span>
           <span class="stat-value" id="stat-composition">--</span>
           <span class="stat-meta" id="stat-composition-desc">Based on radius & mass.</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-title">Earth Similarity Index (ESI)</span>
+          <span class="stat-value" id="stat-esi-global">--</span>
+          <span class="stat-meta" id="stat-esi-breakdown">Interior: -- | Surface: --</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-title">Orbital Period (Year Length)</span>
+          <span class="stat-value" id="stat-period">-- days</span>
+          <span class="stat-meta" id="stat-period-years">-- Earth years</span>
         </div>
       </div>
     </main>
