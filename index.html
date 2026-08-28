@@ -24,6 +24,11 @@
       <select id="planet-select">
         <option value="custom">-- Custom Sandbox --</option>
         <option value="Earth" selected>Earth</option>
+        <option value="Venus">Venus</option>
+        <option value="Mars">Mars</option>
+        <option value="Jupiter">Jupiter</option>
+        <option value="Saturn">Saturn</option>
+        <option value="Neptune">Neptune</option>
         <option value="Kepler-186f">Kepler-186f</option>
         <option value="Proxima Centauri b">Proxima Centauri b</option>
         <option value="TRAPPIST-1e">TRAPPIST-1e</option>
@@ -33,6 +38,9 @@
         <option value="WASP-12b">WASP-12b</option>
         <option value="Gliese 667 C c">Gliese 667 C c</option>
         <option value="TOI-700 d">TOI-700 d</option>
+        <option value="Kepler-442b">Kepler-442b</option>
+        <option value="K2-18b">K2-18b</option>
+        <option value="LHS 1140 b">LHS 1140 b</option>
       </select>
     </div>
   </header>
@@ -57,8 +65,8 @@
           <label for="planet-dist">Orbit Distance</label>
           <span class="value-display"><span id="val-planet-dist">1.00</span> AU</span>
         </div>
-        <input type="range" id="planet-dist" min="0.01" max="4.0" step="0.01" value="1.0">
-        <div class="range-limits"><span>Close (0.01)</span> <span>Far (4.0)</span></div>
+        <input type="range" id="planet-dist" min="0.01" max="40.0" step="0.0001" value="1.0">
+        <div class="range-limits"><span>Close (0.01)</span> <span>Far (40.0)</span></div>
       </div>
 
       <div class="control-group">
@@ -66,7 +74,7 @@
           <label for="planet-radius">Planet Radius</label>
           <span class="value-display"><span id="val-planet-radius">1.00</span> R⊕</span>
         </div>
-        <input type="range" id="planet-radius" min="0.1" max="25.0" step="0.1" value="1.0">
+        <input type="range" id="planet-radius" min="0.1" max="25.0" step="0.001" value="1.0">
         <div class="range-limits"><span>Sub-Earth (0.1)</span> <span>Super-Giant (25.0)</span></div>
       </div>
 
@@ -75,7 +83,7 @@
           <label for="planet-mass">Planet Mass</label>
           <span class="value-display"><span id="val-planet-mass">1.00</span> M⊕</span>
         </div>
-        <input type="range" id="planet-mass" min="0.01" max="500.0" step="0.1" value="1.0">
+        <input type="range" id="planet-mass" min="0.01" max="500.0" step="0.001" value="1.0">
         <div class="range-limits"><span>Light (0.01)</span> <span>Heavy (500.0)</span></div>
       </div>
 
@@ -84,7 +92,7 @@
           <label for="eccentricity">Orbital Eccentricity</label>
           <span class="value-display"><span id="val-eccentricity">0.02</span></span>
         </div>
-        <input type="range" id="eccentricity" min="0.0" max="0.9" step="0.01" value="0.017">
+        <input type="range" id="eccentricity" min="0.0" max="0.9" step="0.0001" value="0.017">
         <div class="range-limits"><span>Circular (0.0)</span> <span>Extreme Ellipse (0.9)</span></div>
       </div>
 
@@ -93,7 +101,7 @@
           <label for="albedo">Bond Albedo (Reflectivity)</label>
           <span class="value-display"><span id="val-albedo">0.30</span></span>
         </div>
-        <input type="range" id="albedo" min="0.0" max="0.95" step="0.01" value="0.30">
+        <input type="range" id="albedo" min="0.0" max="0.95" step="0.001" value="0.30">
         <div class="range-limits"><span>Dark (0.0)</span> <span>Shiny Ice/Clouds (0.95)</span></div>
       </div>
     </section>

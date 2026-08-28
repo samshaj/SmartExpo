@@ -1,6 +1,11 @@
 // Exoplanet presets from planets.csv
 const PLANET_PRESETS = {
-  "Earth": { luminosity: 1.0, distance: 1.0, radius: 1.0, mass: 1.0, density: 1.0, eccentricity: 0.017, albedo: 0.30 },
+  "Earth": { luminosity: 1.0, distance: 1.0, radius: 1.0, mass: 0.9, density: 1.0, eccentricity: 0.017, albedo: 0.30 },
+  "Venus": { luminosity: 1.0, distance: 0.723, radius: 0.949, mass: 0.815, density: 0.95, eccentricity: 0.0067, albedo: 0.75 },
+  "Mars": { luminosity: 1.0, distance: 1.524, radius: 0.532, mass: 0.107, density: 0.71, eccentricity: 0.0934, albedo: 0.25 },
+  "Jupiter": { luminosity: 1.0, distance: 5.204, radius: 11.21, mass: 317.8, density: 0.24, eccentricity: 0.0489, albedo: 0.34 },
+  "Saturn": { luminosity: 1.0, distance: 9.582, radius: 9.45, mass: 95.2, density: 0.12, eccentricity: 0.0565, albedo: 0.34 },
+  "Neptune": { luminosity: 1.0, distance: 30.05, radius: 3.88, mass: 17.1, density: 0.30, eccentricity: 0.0095, albedo: 0.29 },
   "Kepler-186f": { luminosity: 0.0412, distance: 0.432, radius: 1.17, mass: 1.71, density: 1.07, eccentricity: 0.04, albedo: 0.30 },
   "Proxima Centauri b": { luminosity: 0.00155, distance: 0.0485, radius: 1.03, mass: 1.17, density: 1.07, eccentricity: 0.11, albedo: 0.30 },
   "TRAPPIST-1e": { luminosity: 0.000553, distance: 0.0293, radius: 0.92, mass: 0.69, density: 0.89, eccentricity: 0.008, albedo: 0.30 },
@@ -9,7 +14,10 @@ const PLANET_PRESETS = {
   "Kepler-452b": { luminosity: 1.2, distance: 1.046, radius: 1.63, mass: 5.0, density: 1.15, eccentricity: 0.035, albedo: 0.30 },
   "WASP-12b": { luminosity: 2.1, distance: 0.0229, radius: 21.3, mass: 467.0, density: 0.05, eccentricity: 0.0, albedo: 0.06 },
   "Gliese 667 C c": { luminosity: 0.0137, distance: 0.125, radius: 1.54, mass: 3.8, density: 1.04, eccentricity: 0.27, albedo: 0.30 },
-  "TOI-700 d": { luminosity: 0.023, distance: 0.163, radius: 1.14, mass: 1.72, density: 1.16, eccentricity: 0.03, albedo: 0.30 }
+  "TOI-700 d": { luminosity: 0.023, distance: 0.163, radius: 1.14, mass: 1.72, density: 1.16, eccentricity: 0.03, albedo: 0.30 },
+  "Kepler-442b": { luminosity: 0.12, distance: 0.409, radius: 1.34, mass: 2.36, density: 0.98, eccentricity: 0.04, albedo: 0.30 },
+  "K2-18b": { luminosity: 0.023, distance: 0.159, radius: 2.61, mass: 8.63, density: 0.48, eccentricity: 0.20, albedo: 0.30 },
+  "LHS 1140 b": { luminosity: 0.0044, distance: 0.0936, radius: 1.70, mass: 5.6, density: 1.14, eccentricity: 0.06, albedo: 0.30 }
 };
 
 // Setup greenhouse warming function
@@ -91,12 +99,12 @@ function updateUI() {
   const albedo = parseFloat(inputAlbedo.value);
 
   // Update slider label values
-  valStarLum.innerText = L.toFixed(4);
-  valPlanetDist.innerText = d.toFixed(3);
-  valPlanetRadius.innerText = r.toFixed(2);
-  valPlanetMass.innerText = m.toFixed(2);
-  valEccentricity.innerText = e.toFixed(3);
-  valAlbedo.innerText = albedo.toFixed(2);
+  valStarLum.innerText = L.toFixed(6);
+  valPlanetDist.innerText = d.toFixed(4);
+  valPlanetRadius.innerText = r.toFixed(3);
+  valPlanetMass.innerText = m.toFixed(3);
+  valEccentricity.innerText = e.toFixed(4);
+  valAlbedo.innerText = albedo.toFixed(3);
 
   // 1. Calculations
   const energyReceived = L / (d * d);
@@ -114,11 +122,21 @@ function updateUI() {
 
   // 2. Verdict & Styling Update
   verdictContainer.className = "verdict-card"; // reset classes
-  if (inHZ && isRocky) {
+  if (inHZ && isRocky && tempCelsius >= -20 && tempCelsius <= 100) {
     verdictContainer.classList.add("habitable");
     verdictIcon.innerText = "❇️";
     verdictTitle.innerText = "POTENTIALLY HABITABLE";
     verdictDesc.innerText = `A rocky planet (${r} R⊕) within the Goldilocks zone. Temperatures average ${tempCelsius.toFixed(1)}°C, allowing liquid surface water.`;
+  } else if (inHZ && isRocky && tempCelsius > 100) {
+    verdictContainer.classList.add("not-habitable");
+    verdictIcon.innerText = "🔥";
+    verdictTitle.innerText = "TOO HOT FOR LIFE";
+    verdictDesc.innerText = `Orbiting in the habitable zone, but extreme greenhouse effects or stellar properties drive the temperature to a scorching ${tempCelsius.toFixed(1)}°C.`;
+  } else if (inHZ && isRocky && tempCelsius < -20) {
+    verdictContainer.classList.add("not-habitable");
+    verdictIcon.innerText = "❄️";
+    verdictTitle.innerText = "TOO COLD FOR LIFE";
+    verdictDesc.innerText = `Orbiting in the habitable zone, but low greenhouse warming or high albedo leads to a deep freeze of ${tempCelsius.toFixed(1)}°C.`;
   } else if (inHZ) {
     verdictContainer.classList.add("partially-habitable");
     verdictIcon.innerText = "💨";

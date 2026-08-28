@@ -175,8 +175,12 @@ def check_habitability(name, star_luminosity, planet_distance, planet_radius, pl
     output.append(f"  ---------------------------------------")
 
     # Verdict
-    if in_habitable_zone and is_rocky:
+    if in_habitable_zone and is_rocky and -20 <= temp_celsius <= 100:
         output.append("  Verdict: Potentially Habitable Rocky World!")
+    elif in_habitable_zone and is_rocky and temp_celsius > 100:
+        output.append("  Verdict: In the Habitable Zone, but temperature is Too Hot for Life.")
+    elif in_habitable_zone and is_rocky and temp_celsius < -20:
+        output.append("  Verdict: In the Habitable Zone, but temperature is Too Cold for Life.")
     elif in_habitable_zone:
         output.append("  Verdict: In the Habitable Zone, but likely a Gas Giant (Not Rocky).")
     else:

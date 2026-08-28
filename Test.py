@@ -37,7 +37,7 @@ def calculate_atmos_gases(temperature, esc_vels):
         }
     return results
 
-earth_retention = calculate_atmos_gases(1000, calculate_esc_vel(2, 1.25))
+earth_retention = calculate_atmos_gases(exo_mass, calculate_esc_vel(2, 1.25))
 for gas, data in earth_retention.items():
     status = "Retained" if data["can_retain"] else "Escapes"
     print(f"{gas:20s} | Thermal Speed: {data['esc_kms']} km/s | {status}")
