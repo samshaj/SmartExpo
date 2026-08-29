@@ -1,197 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exoplanet Habitability Simulator</title>
-  <!-- Google Fonts for futuristic sci-fi typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exoplanet Habitability Simulator</title>
+    <!-- Google Fonts for futuristic sci-fi typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="stars-bg"></div>
-  <div class="glow-bg"></div>
+    <div class="stars-bg"></div>
+    <div class="glow-bg"></div>
 
-  <header class="app-header">
-    <div class="logo">
-      <span class="icon">🪐</span>
-      <h1>EXOPLANET HABITABILITY SIMULATOR</h1>
-    </div>
-    <div class="preset-selector">
-      <label for="planet-select">Preset Planet:</label>
-      <select id="planet-select">
-        <option value="custom">-- Custom Sandbox --</option>
-        <option value="Earth" selected>Earth</option>
-        <option value="Venus">Venus</option>
-        <option value="Mars">Mars</option>
-        <option value="Jupiter">Jupiter</option>
-        <option value="Saturn">Saturn</option>
-        <option value="Neptune">Neptune</option>
-        <option value="Kepler-186f">Kepler-186f</option>
-        <option value="Proxima Centauri b">Proxima Centauri b</option>
-        <option value="TRAPPIST-1e">TRAPPIST-1e</option>
-        <option value="Kepler-22b">Kepler-22b</option>
-        <option value="HD 209458 b">HD 209458 b</option>
-        <option value="Kepler-452b">Kepler-452b</option>
-        <option value="WASP-12b">WASP-12b</option>
-        <option value="Gliese 667 C c">Gliese 667 C c</option>
-        <option value="TOI-700 d">TOI-700 d</option>
-        <option value="Kepler-442b">Kepler-442b</option>
-        <option value="K2-18b">K2-18b</option>
-        <option value="LHS 1140 b">LHS 1140 b</option>
-      </select>
-    </div>
-  </header>
-
-  <main class="app-container">
-    <!-- LEFT: Parameters Slider Controls -->
-    <section class="panel controls-panel">
-      <h2>Planetary Sandbox</h2>
-      <p class="subtitle">Modify values to customize your exoplanet properties.</p>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="star-lum">Star Luminosity</label>
-          <span class="value-display"><span id="val-star-lum">1.00</span> L☉</span>
+    <header class="app-header">
+        <div class="logo">
+            <span class="icon">🪐</span>
+            <h1>EXOPLANET HABITABILITY SIMULATOR</h1>
         </div>
-        <input type="range" id="star-lum" min="0.0001" max="5.0" step="0.0001" value="1.0">
-        <div class="range-limits"><span>Dim M-Dwarf (0.0001)</span> <span>Bright (5.0)</span></div>
-      </div>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="planet-dist">Orbit Distance</label>
-          <span class="value-display"><span id="val-planet-dist">1.00</span> AU</span>
-        </div>
-        <input type="range" id="planet-dist" min="0.01" max="40.0" step="0.0001" value="1.0">
-        <div class="range-limits"><span>Close (0.01)</span> <span>Far (40.0)</span></div>
-      </div>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="planet-radius">Planet Radius</label>
-          <span class="value-display"><span id="val-planet-radius">1.00</span> R⊕</span>
-        </div>
-        <input type="range" id="planet-radius" min="0.1" max="25.0" step="0.001" value="1.0">
-        <div class="range-limits"><span>Sub-Earth (0.1)</span> <span>Super-Giant (25.0)</span></div>
-      </div>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="planet-mass">Planet Mass</label>
-          <span class="value-display"><span id="val-planet-mass">1.00</span> M⊕</span>
-        </div>
-        <input type="range" id="planet-mass" min="0.01" max="500.0" step="0.001" value="1.0">
-        <div class="range-limits"><span>Light (0.01)</span> <span>Heavy (500.0)</span></div>
-      </div>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="eccentricity">Orbital Eccentricity</label>
-          <span class="value-display"><span id="val-eccentricity">0.02</span></span>
-        </div>
-        <input type="range" id="eccentricity" min="0.0" max="0.9" step="0.0001" value="0.017">
-        <div class="range-limits"><span>Circular (0.0)</span> <span>Extreme Ellipse (0.9)</span></div>
-      </div>
-
-      <div class="control-group">
-        <div class="label-row">
-          <label for="albedo">Bond Albedo (Reflectivity)</label>
-          <span class="value-display"><span id="val-albedo">0.30</span></span>
-        </div>
-        <input type="range" id="albedo" min="0.0" max="0.95" step="0.001" value="0.30">
-        <div class="range-limits"><span>Dark (0.0)</span> <span>Shiny Ice/Clouds (0.95)</span></div>
-      </div>
-    </section>
-
-    <!-- CENTER: 2D Model Visualizer -->
-    <section class="visualizer-container">
-      <div class="visualizer-card">
-        <div class="card-header">
-          <h3>2D Orbital Model</h3>
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <label for="zoom-select" style="font-size: 0.8rem; color: var(--text-muted);">Zoom:</label>
-            <select id="zoom-select" class="btn-secondary" style="background: rgba(10, 18, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.2); padding: 0.3rem 0.6rem; border-radius: 4px; color: #fff;">
-              <option value="auto" selected>Auto Fit</option>
-              <option value="1x">1x (Far)</option>
-              <option value="5x">5x</option>
-              <option value="10x">10x</option>
-              <option value="50x">50x (Close-in)</option>
+        <div class="preset-selector">
+            <label for="planet-select">Preset Planet:</label>
+            <select id="planet-select">
+                <option value="custom">-- Custom Sandbox --</option>
+                <option value="Earth" selected>Earth</option>
+                <option value="Venus">Venus</option>
+                <option value="Mars">Mars</option>
+                <option value="Jupiter">Jupiter</option>
+                <option value="Saturn">Saturn</option>
+                <option value="Neptune">Neptune</option>
+                <option value="Kepler-186f">Kepler-186f</option>
+                <option value="Proxima Centauri b">Proxima Centauri b</option>
+                <option value="TRAPPIST-1e">TRAPPIST-1e</option>
+                <option value="Kepler-22b">Kepler-22b</option>
+                <option value="HD 209458 b">HD 209458 b</option>
+                <option value="Kepler-452b">Kepler-452b</option>
+                <option value="WASP-12b">WASP-12b</option>
+                <option value="Gliese 667 C c">Gliese 667 C c</option>
+                <option value="TOI-700 d">TOI-700 d</option>
+                <option value="Kepler-442b">Kepler-442b</option>
+                <option value="K2-18b">K2-18b</option>
+                <option value="LHS 1140 b">LHS 1140 b</option>
             </select>
-            <button id="toggle-orbit-anim" class="btn-secondary">Pause Animation</button>
-          </div>
         </div>
-        <div class="canvas-wrapper">
-          <canvas id="orbit-canvas"></canvas>
-        </div>
-        <div class="visualizer-legend">
-          <span class="legend-item"><span class="bullet hz"></span>Habitable Zone (HZ)</span>
-          <span class="legend-item"><span class="bullet inner"></span>Too Hot</span>
-          <span class="legend-item"><span class="bullet outer"></span>Too Cold</span>
-        </div>
-      </div>
-    </section>
+    </header>
 
-    <!-- RIGHT: Live Habitability Analysis -->
-    <section class="panel analysis-panel">
-      <h2>Live Analysis</h2>
-      <p class="subtitle">Real-time calculations for atmospheric & planetary status.</p>
+    <main class="app-container">
+        <!-- LEFT: Parameters Slider Controls -->
+        <section class="panel controls-panel">
+            <h2>Planetary Sandbox</h2>
+            <p class="subtitle">Modify values to customize your exoplanet properties.</p>
 
-      <div class="verdict-card" id="verdict-container">
-        <span class="verdict-icon" id="verdict-icon">❓</span>
-        <div>
-          <h4 class="verdict-title" id="verdict-title">Evaluating...</h4>
-          <p class="verdict-desc" id="verdict-desc">Please adjust controls to begin analysis.</p>
-        </div>
-      </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="star-lum">Star Luminosity</label>
+                    <span class="value-display"><span id="val-star-lum">1.00</span> L☉</span>
+                </div>
+                <input type="range" id="star-lum" min="0.0001" max="5.0" step="0.0001" value="1.0">
+                <div class="range-limits"><span>Dim M-Dwarf (0.0001)</span> <span>Bright (5.0)</span></div>
+            </div>
 
-      <div class="analysis-stats">
-        <div class="stat-card">
-          <span class="stat-title">Estimated Temperature</span>
-          <span class="stat-value" id="stat-temp">-- °C</span>
-          <div class="progress-bar-container">
-            <div class="progress-bar" id="temp-progress" style="width: 50%;"></div>
-          </div>
-        </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="planet-dist">Orbit Distance</label>
+                    <span class="value-display"><span id="val-planet-dist">1.00</span> AU</span>
+                </div>
+                <input type="range" id="planet-dist" min="0.01" max="40.0" step="0.0001" value="1.0">
+                <div class="range-limits"><span>Close (0.01)</span> <span>Far (40.0)</span></div>
+            </div>
 
-        <div class="stat-card">
-          <span class="stat-title">Goldilocks Zone (HZ) Boundaries</span>
-          <span class="stat-value" id="stat-hz-range">-- to -- AU</span>
-          <span class="stat-meta" id="stat-hz-position">Evaluating orbit position...</span>
-        </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="planet-radius">Planet Radius</label>
+                    <span class="value-display"><span id="val-planet-radius">1.00</span> R⊕</span>
+                </div>
+                <input type="range" id="planet-radius" min="0.1" max="25.0" step="0.001" value="1.0">
+                <div class="range-limits"><span>Sub-Earth (0.1)</span> <span>Super-Giant (25.0)</span></div>
+            </div>
 
-        <div class="stat-card">
-          <span class="stat-title">Solar Energy Received</span>
-          <span class="stat-value" id="stat-energy">--x Earth</span>
-          <span class="stat-meta" id="stat-energy-desc">Earth relative stellar flux.</span>
-        </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="planet-mass">Planet Mass</label>
+                    <span class="value-display"><span id="val-planet-mass">1.00</span> M⊕</span>
+                </div>
+                <input type="range" id="planet-mass" min="0.01" max="500.0" step="0.001" value="1.0">
+                <div class="range-limits"><span>Light (0.01)</span> <span id="max-mass-label">Heavy (500.0)</span></div>
+            </div>
 
-        <div class="stat-card">
-          <span class="stat-title">Physical Composition</span>
-          <span class="stat-value" id="stat-composition">--</span>
-          <span class="stat-meta" id="stat-composition-desc">Based on radius & mass.</span>
-        </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="eccentricity">Orbital Eccentricity</label>
+                    <span class="value-display"><span id="val-eccentricity">0.02</span></span>
+                </div>
+                <input type="range" id="eccentricity" min="0.0" max="0.9" step="0.0001" value="0.017">
+                <div class="range-limits"><span>Circular (0.0)</span> <span>Extreme Ellipse (0.9)</span></div>
+            </div>
 
-        <div class="stat-card">
-          <span class="stat-title">Earth Similarity Index (ESI)</span>
-          <span class="stat-value" id="stat-esi-global">--</span>
-          <span class="stat-meta" id="stat-esi-breakdown">Interior: -- | Surface: --</span>
-        </div>
+            <div class="control-group">
+                <div class="label-row">
+                    <label for="albedo">Bond Albedo (Reflectivity)</label>
+                    <span class="value-display"><span id="val-albedo">0.30</span></span>
+                </div>
+                <input type="range" id="albedo" min="0.0" max="0.95" step="0.001" value="0.30">
+                <div class="range-limits"><span>Dark (0.0)</span> <span>Shiny Ice/Clouds (0.95)</span></div>
+            </div>
+        </section>
 
-        <div class="stat-card">
-          <span class="stat-title">Orbital Period (Year Length)</span>
-          <span class="stat-value" id="stat-period">-- days</span>
-          <span class="stat-meta" id="stat-period-years">-- Earth years</span>
-        </div>
-      </div>
+        <!-- CENTER: 2D Model Visualizer -->
+        <section class="visualizer-container">
+            <div class="visualizer-card">
+                <div class="card-header">
+                    <h3>2D Orbital Model</h3>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <label for="zoom-slider" style="font-size: 0.8rem; color: var(--text-muted);">Zoom: <span id="val-zoom">1.0</span>x</label>
+                            <input type="range" id="zoom-slider" min="0.2" max="30" step="0.01" value="1.0" style="width: 200px;">
+                        </div>
+                        <button id="toggle-orbit-anim" class="btn-secondary">Pause Animation</button>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="orbit-canvas"></canvas>
+                </div>
+                <div class="visualizer-legend">
+                    <span class="legend-item"><span class="bullet hz"></span>Habitable Zone (HZ)</span>
+                    <span class="legend-item"><span class="bullet inner"></span>Too Hot</span>
+                    <span class="legend-item"><span class="bullet outer"></span>Too Cold</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT: Live Habitability Analysis -->
+        <section class="panel analysis-panel">
+            <h2>Live Analysis</h2>
+            <p class="subtitle">Real-time calculations for atmospheric & planetary status.</p>
+
+            <div class="verdict-card" id="verdict-container">
+                <span class="verdict-icon" id="verdict-icon">❓</span>
+                <div>
+                    <h4 class="verdict-title" id="verdict-title">Evaluating...</h4>
+                    <p class="verdict-desc" id="verdict-desc">Please adjust controls to begin analysis.</p>
+                </div>
+            </div>
+
+            <div class="analysis-stats">
+                <div class="stat-card">
+                    <span class="stat-title">Estimated Temperature</span>
+                    <span class="stat-value" id="stat-temp">-- °C</span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="temp-progress" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-title">Goldilocks Zone (HZ) Boundaries</span>
+                    <span class="stat-value" id="stat-hz-range">-- to -- AU</span>
+                    <span class="stat-meta" id="stat-hz-position">Evaluating orbit position...</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-title">Solar Energy Received</span>
+                    <span class="stat-value" id="stat-energy">--x Earth</span>
+                    <span class="stat-meta" id="stat-energy-desc">Earth relative stellar flux.</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-title">Physical Composition</span>
+                    <span class="stat-value" id="stat-composition">--</span>
+                    <span class="stat-meta" id="stat-composition-desc">Based on radius & mass.</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-title">Earth Similarity Index (ESI)</span>
+                    <span class="stat-value" id="stat-esi-global">--</span>
+                    <span class="stat-meta" id="stat-esi-breakdown">Interior: -- | Surface: --</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-title">Orbital Period (Year Length)</span>
+                    <span class="stat-value" id="stat-period">-- days</span>
+                    <span class="stat-meta" id="stat-period-years">-- Earth years</span>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="app-footer">
-      <p>Interactive Space Expo Module. Use sliders to change distance & watch orbit change dynamically.</p>
+        <p>Interactive Space Expo Module. Use sliders to change distance & watch orbit change dynamically.</p>
     </footer>
 
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
