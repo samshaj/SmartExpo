@@ -418,7 +418,7 @@ function drawScene(timestamp) {
     // Base auto-fit scale multiplied by the slider value
     let scale = (baseScale / maxSimDist) * zoomFactor;
 
-    // 1. Draw Goldilocks boundaries (HZ)
+    // 1. Draw Goldilocks boundaries (HZ) 
     // Inner limit (Red zone boundary)
     ctx.fillStyle = "rgba(239, 68, 68, 0.05)";
     ctx.beginPath();
