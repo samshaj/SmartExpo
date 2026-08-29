@@ -3,3 +3,11 @@ node_modules/
 .agents/
 .gemini/
 __pycache__/
+/.vs/SmartExpo/config/applicationhost.config
+/.vs/SmartExpo/FileContentIndex/9bf1a254-822b-4339-902b-9aa86ae7389f.vsidx
+/.vs/SmartExpo/v17/.wsuo
+/.vs/SmartExpo/v17/DocumentLayout.json
+/.vs/SmartExpo/FileContentIndex/ce2d2d59-d837-4194-b7e2-f7671900818d.vsidx
+/.vs/slnx.sqlite
+/.vs/SmartExpo/FileContentIndex
+/.vs/VSWorkspaceState.json
