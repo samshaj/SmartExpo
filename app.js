@@ -1,6 +1,6 @@
 // Exoplanet presets from planets.csv
 const PLANET_PRESETS = {
-    "Earth": { luminosity: 1.0, distance: 1.0, radius: 1.0, mass: 0.9, density: 1.0, eccentricity: 0.017, albedo: 0.30 },
+    "Earth": { luminosity: 1.0, distance: 1.0, radius: 1.0, mass: 1.0, density: 1.0, eccentricity: 0.017, albedo: 0.30 },
     "Venus": { luminosity: 1.0, distance: 0.723, radius: 0.949, mass: 0.815, density: 0.95, eccentricity: 0.0067, albedo: 0.75 },
     "Mars": { luminosity: 1.0, distance: 1.524, radius: 0.532, mass: 0.107, density: 0.71, eccentricity: 0.0934, albedo: 0.25 },
     "Jupiter": { luminosity: 1.0, distance: 5.204, radius: 11.21, mass: 317.8, density: 0.24, eccentricity: 0.0489, albedo: 0.34 },
@@ -30,6 +30,7 @@ function estimateGreenhouseWarming(massEarth, radiusEarth, tEqKelvin) {
 
     // Calculate bulk density relative to Earth (Earth density = 1.0)
     const relativeDensity = massEarth / Math.pow(radiusEarth, 3);
+
 
     // Physical Limit Checks:
     // 1. Extreme Density: Rocky worlds cannot realistically exceed ~3x Earth's density 
@@ -205,7 +206,7 @@ function updateUI() {
     const outerEdge = Math.sqrt(L / 0.36);
 
     const inHZ = d >= innerEdge && d <= outerEdge;
-    const isRocky = r >= 0.5 && r <= 1.6;
+    const isRocky = r >= 0.1 && r <= 1.6;
 
     // Temperature estimation: Temp_kelvin = 278.5 * ((energy * (1 - albedo))^0.25) + greenhouse warming
     const tEqKelvin = 278.5 * Math.pow(energyReceived * (1 - albedo), 0.25);
@@ -215,36 +216,37 @@ function updateUI() {
 
     // 2. Verdict & Styling Update
     verdictContainer.className = "verdict-card"; // reset classes
-    if (inHZ && isRocky && tempCelsius >= -20 && tempCelsius <= 100) {
+    if (inHZ && isRocky && tempCelsius >= -20 && tempCelsius <= 60) {
         verdictContainer.classList.add("habitable");
         verdictIcon.innerText = "❇️";
         verdictTitle.innerText = "POTENTIALLY HABITABLE";
         verdictDesc.innerText = `A rocky planet (${r} R⊕) within the Goldilocks zone. Temperatures average ${tempCelsius.toFixed(1)}°C, allowing liquid surface water.`;
-    } else if (inHZ && isRocky && tempCelsius > 100) {
-        verdictContainer.classList.add("not-habitable");
+    } else if (inHZ && isRocky && tempCelsius > 60) {
+        verdictContainer.classList.add("not-habitable-hot");
         verdictIcon.innerText = "🔥";
         verdictTitle.innerText = "TOO HOT FOR LIFE";
         verdictDesc.innerText = `Orbiting in the habitable zone, but extreme greenhouse effects or stellar properties drive the temperature to a scorching ${tempCelsius.toFixed(1)}°C.`;
     } else if (inHZ && isRocky && tempCelsius < -20) {
-        verdictContainer.classList.add("not-habitable");
+        verdictContainer.classList.add("not-habitable-cold");
         verdictIcon.innerText = "❄️";
         verdictTitle.innerText = "TOO COLD FOR LIFE";
         verdictDesc.innerText = `Orbiting in the habitable zone, but low greenhouse warming or high albedo leads to a deep freeze of ${tempCelsius.toFixed(1)}°C.`;
     } else if (inHZ) {
         verdictContainer.classList.add("partially-habitable");
-        verdictIcon.innerText = "💨";
-        verdictTitle.innerText = "GAS GIANT IN HABITABLE ZONE";
-        verdictDesc.innerText = `Orbiting in the right zone, but the planet is too large (${r} R⊕) and likely lacks a solid surface. Could host habitable moons.`;
+        verdictIcon.innerText = "☁️";
+        verdictTitle.innerText = "JOVIAN/SUPER EARTH IN HABITABLE ZONE";
+        verdictDesc.innerText = `Orbiting in the right zone, but the planet is too large (${r.toFixed(1)} R⊕) and likely lacks a solid surface. Could host habitable moons.`;
     } else {
-        verdictContainer.classList.add("not-habitable");
         if (d < innerEdge) {
-            verdictIcon.innerText = "🔥";
-            verdictTitle.innerText = "TOO HOT FOR LIFE";
-            verdictDesc.innerText = `Orbiting too close to the star. Extreme solar radiation drives temperature to a scorching ${tempCelsius.toFixed(1)}°C.`;
+            verdictIcon.innerText = "🌡️";
+            verdictTitle.innerText = "OUTSIDE HABITABLE ZONE";
+            verdictDesc.innerText = `Orbiting too close to the star. Extreme solar radiation can potentially cause high temperature.`;
+            verdictContainer.classList.add("out-zone-hot");
         } else {
-            verdictIcon.innerText = "❄️";
-            verdictTitle.innerText = "TOO COLD FOR LIFE";
-            verdictDesc.innerText = `Orbiting too far out. Extremely low solar flux results in a deep freeze of ${tempCelsius.toFixed(1)}°C.`;
+            verdictIcon.innerText = "🌀";
+            verdictTitle.innerText = "OUTSIDE HABITABLE ZONE";
+            verdictDesc.innerText = `Orbiting too far out. Extremely low solar flux can result in really low temperatures`;
+            verdictContainer.classList.add("out-zone-cold");
         }
     }
 
@@ -352,7 +354,7 @@ inputs.forEach(input => {
 // Grab the DOM element for the mass label
 const maxMassLabel = document.getElementById("max-mass-label");
 
-// Dynamic mass slider limit based on radius (pure iron limit: 3.8 * R^3)
+// Dynamic mass slider limit based on radius (pure iron limit: 3.0 * R^3)
 inputPlanetRadius.addEventListener("input", () => {
     const r = parseFloat(inputPlanetRadius.value);
 
@@ -418,7 +420,7 @@ function drawScene(timestamp) {
     // Base auto-fit scale multiplied by the slider value
     let scale = (baseScale / maxSimDist) * zoomFactor;
 
-    // 1. Draw Goldilocks boundaries (HZ) 
+    // 1. Draw Goldilocks boundaries (HZ)
     // Inner limit (Red zone boundary)
     ctx.fillStyle = "rgba(239, 68, 68, 0.05)";
     ctx.beginPath();
